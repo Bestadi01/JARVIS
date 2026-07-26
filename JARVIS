@@ -1,11 +1,26 @@
-JARVIS
+JARVIS/
 │
 ├── index.html
-├── style.css
+├── css/
+│   ├── main.css
+│   ├── chat.css
+│   └── theme.css
 │
-├── app.js
-├── ai.js
-├── commands.js
-├── memory.js
-├── voice.js
-└── script.js
+├── js/
+│   ├── app.js
+│   ├── ui.js
+│   ├── router.js
+│   ├── api.js
+│   ├── storage.js
+│   └── config.js
+│
+├── modules/
+│   ├── ai/
+│   ├── voice/
+│   ├── plugins/
+│   ├── memory/
+│   └── system/
+│
+├── assets/
+│
+└── README.md
