@@ -1,4 +1,12 @@
-JARVIS/
-├── index.html
-├── style.css
-└── script.js
+JARVIS
+│
+├── css
+├── js
+├── img
+├── sounds
+├── data
+├── pages
+├── api
+├── plugins
+├── system
+└── index.html
