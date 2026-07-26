@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JARVIS</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
-    <h1>JARVIS ONLINE</h1>
+<div class="container">
 
-    <button id="startBtn">START</button>
+<h1>JARVIS</h1>
 
-    <script src="script.js"></script>
+<p>Artificial Intelligence Assistant</p>
+
+<p id="status">สถานะ : Offline</p>
+
+<button onclick="startJarvis()">Start</button>
+
+<div id="chatBox"></div>
+
+<input
+type="text"
+id="userInput"
+placeholder="พิมพ์ข้อความ...">
+
+<button onclick="sendMessage()">ส่ง</button>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
