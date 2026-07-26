@@ -1,6 +1,54 @@
 // ==========================
-// JARVIS v1.0
+// JARVIS v2.0
+// Command System
 // ==========================
+
+const commands = {
+
+   "google": function () {
+    window.open("https://www.google.com");
+    },
+    "YouTube": function () {
+    window.open("https://www.youtube.com");
+    },
+    
+    "วันที่": function () {
+        addMessage("JARVIS", new Date().toLocaleDateString());
+    },
+  
+    "สวัสดี": function () {
+        addMessage("JARVIS", "สวัสดีครับ");
+    },
+
+    "เวลา": function () {
+        addMessage("JARVIS", new Date().toLocaleTimeString());
+    },
+
+    "ชื่อฉันคืออะไร": function () {
+
+        let name = localStorage.getItem("jarvis_name");
+
+        if (name) {
+
+            addMessage("JARVIS", "คุณชื่อ " + name);
+
+        } else {
+
+            addMessage("JARVIS", "คุณยังไม่ได้บอกชื่อ");
+
+        }
+
+    },
+
+    "ลบความจำ": function () {
+
+        localStorage.removeItem("jarvis_name");
+
+        addMessage("JARVIS", "ลบข้อมูลเรียบร้อย");
+
+    }
+
+};
 
 function startJarvis() {
 
@@ -16,8 +64,6 @@ function startJarvis() {
 
         addMessage("JARVIS", "สวัสดีครับ ผมคือ JARVIS");
 
-        addMessage("JARVIS", "พิมพ์ : ฉันชื่อ ...");
-
     }
 
 }
@@ -32,18 +78,15 @@ function sendMessage() {
 
     addMessage("คุณ", text);
 
-    reply(text);
+    process(text);
 
     input.value = "";
 
 }
 
-function reply(text) {
+function process(text) {
 
-    let msg = text.toLowerCase();
-
-    // จำชื่อ
-    if (msg.startsWith("ฉันชื่อ ")) {
+    if (text.startsWith("ฉันชื่อ ")) {
 
         let name = text.substring(8);
 
@@ -55,55 +98,15 @@ function reply(text) {
 
     }
 
-    // ถามชื่อ
-    if (msg == "ชื่อฉันคืออะไร") {
+    if (commands[text]) {
 
-        let name = localStorage.getItem("jarvis_name");
+        commands[text]();
 
-        if (name) {
+    } else {
 
-            addMessage("JARVIS", "คุณชื่อ " + name);
-
-        } else {
-
-            addMessage("JARVIS", "คุณยังไม่ได้บอกชื่อ");
-
-        }
-
-        return;
+        addMessage("JARVIS", "ไม่พบคำสั่งนี้");
 
     }
-
-    // ลบข้อมูล
-    if (msg == "ลบความจำ") {
-
-        localStorage.removeItem("jarvis_name");
-
-        addMessage("JARVIS", "ลบข้อมูลเรียบร้อย");
-
-        return;
-
-    }
-
-    // เวลา
-    if (msg == "เวลา") {
-
-        addMessage("JARVIS", new Date().toLocaleTimeString());
-
-        return;
-
-    }
-
-    // ทักทาย
-    if (msg == "สวัสดี") {
-
-        addMessage("JARVIS", "สวัสดีครับ");
-
-        return;
-
-    }
-
-    addMessage("JARVIS", "ผมยังไม่เข้าใจคำสั่งนี้");
 
 }
 
