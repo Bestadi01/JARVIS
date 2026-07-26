@@ -1,61 +1,118 @@
+// =========================
+// JARVIS v1.1
+// =========================
+
 function startJarvis(){
 
-document.getElementById("status").innerHTML="สถานะ : Online";
+    document.getElementById("status").innerHTML="สถานะ : Online";
 
-alert("JARVIS พร้อมใช้งาน");
+    let name=localStorage.getItem("username");
+
+    if(name){
+
+        addMessage("JARVIS","ยินดีต้อนรับกลับ "+name);
+
+    }else{
+
+        addMessage("JARVIS","สวัสดี ผมคือ JARVIS");
+
+    }
 
 }
 
 function sendMessage(){
 
-let input=document.getElementById("userInput");
+    let input=document.getElementById("userInput");
 
-let text=input.value;
+    let text=input.value.trim();
 
-if(text=="") return;
+    if(text=="") return;
 
-let chat=document.getElementById("chatBox");
+    addMessage("คุณ",text);
 
-chat.innerHTML+="<p><b>คุณ :</b> "+text+"</p>";
+    reply(text);
 
-let reply="";
-
-switch(text.toLowerCase()){
-
-case "สวัสดี":
-
-reply="สวัสดีครับ ผมคือ JARVIS";
-
-break;
-
-case "ชื่ออะไร":
-
-reply="ผมชื่อ JARVIS";
-
-break;
-
-case "เวลา":
-
-reply=new Date().toLocaleTimeString();
-
-break;
-
-case "วันนี้วันที่":
-
-reply=new Date().toLocaleDateString();
-
-break;
-
-default:
-
-reply="ขออภัย ผมยังไม่เข้าใจคำสั่งนี้";
+    input.value="";
 
 }
 
-chat.innerHTML+="<p style='color:cyan'><b>JARVIS :</b> "+reply+"</p>";
+function reply(text){
 
-input.value="";
+    let msg=text.toLowerCase();
 
-chat.scrollTop=chat.scrollHeight;
+    if(msg.startsWith("ฉันชื่อ ")){
+
+        let name=text.substring(8);
+
+        localStorage.setItem("username",name);
+
+        addMessage("JARVIS","ยินดีที่ได้รู้จัก "+name);
+
+        return;
+
+    }
+
+    if(msg=="ชื่อฉันคืออะไร"){
+
+        let name=localStorage.getItem("username");
+
+        if(name){
+
+            addMessage("JARVIS","คุณชื่อ "+name);
+
+        }else{
+
+            addMessage("JARVIS","คุณยังไม่ได้บอกชื่อ");
+
+        }
+
+        return;
+
+    }
+
+    if(msg=="ลบความจำ"){
+
+        localStorage.clear();
+
+        addMessage("JARVIS","ลบข้อมูลเรียบร้อย");
+
+        return;
+
+    }
+
+    if(msg=="เวลา"){
+
+        addMessage("JARVIS",new Date().toLocaleTimeString());
+
+        return;
+
+    }
+
+    if(msg=="วันที่"){
+
+        addMessage("JARVIS",new Date().toLocaleDateString());
+
+        return;
+
+    }
+
+    if(msg=="สวัสดี"){
+
+        addMessage("JARVIS","สวัสดีครับ");
+
+        return;
+
+    }
+
+    addMessage("JARVIS","ขออภัย ผมยังไม่เข้าใจ");
+}
+
+function addMessage(sender,message){
+
+    let chat=document.getElementById("chatBox");
+
+    chat.innerHTML += "<p><b>"+sender+" :</b> "+message+"</p>";
+
+    chat.scrollTop=chat.scrollHeight;
 
 }
