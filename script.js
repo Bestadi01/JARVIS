@@ -1,20 +1,23 @@
 // =========================
-// JARVIS v1.1
+// JARVIS v2.0
+// Voice + Chat
 // =========================
+
+let recognition;
 
 function startJarvis(){
 
     document.getElementById("status").innerHTML="สถานะ : Online";
 
-    let name=localStorage.getItem("username");
+    speak("JARVIS พร้อมทำงาน");
 
-    if(name){
+    if(localStorage.getItem("username")){
 
-        addMessage("JARVIS","ยินดีต้อนรับกลับ "+name);
+        addMessage("JARVIS","ยินดีต้อนรับ "+localStorage.getItem("username"));
 
     }else{
 
-        addMessage("JARVIS","สวัสดี ผมคือ JARVIS");
+        addMessage("JARVIS","สวัสดีครับ");
 
     }
 
@@ -30,15 +33,17 @@ function sendMessage(){
 
     addMessage("คุณ",text);
 
-    reply(text);
-
     input.value="";
+
+    process(text);
 
 }
 
-function reply(text){
+function process(text){
 
     let msg=text.toLowerCase();
+
+    let reply="";
 
     if(msg.startsWith("ฉันชื่อ ")){
 
@@ -46,65 +51,46 @@ function reply(text){
 
         localStorage.setItem("username",name);
 
-        addMessage("JARVIS","ยินดีที่ได้รู้จัก "+name);
-
-        return;
+        reply="ยินดีที่ได้รู้จัก "+name;
 
     }
 
-    if(msg=="ชื่อฉันคืออะไร"){
+    else if(msg=="ชื่อฉันคืออะไร"){
 
         let name=localStorage.getItem("username");
 
-        if(name){
-
-            addMessage("JARVIS","คุณชื่อ "+name);
-
-        }else{
-
-            addMessage("JARVIS","คุณยังไม่ได้บอกชื่อ");
-
-        }
-
-        return;
+        reply=name ? "คุณชื่อ "+name : "คุณยังไม่ได้บอกชื่อ";
 
     }
 
-    if(msg=="ลบความจำ"){
+    else if(msg=="เวลา"){
 
-        localStorage.clear();
-
-        addMessage("JARVIS","ลบข้อมูลเรียบร้อย");
-
-        return;
+        reply=new Date().toLocaleTimeString();
 
     }
 
-    if(msg=="เวลา"){
+    else if(msg=="วันที่"){
 
-        addMessage("JARVIS",new Date().toLocaleTimeString());
-
-        return;
+        reply=new Date().toLocaleDateString();
 
     }
 
-    if(msg=="วันที่"){
+    else if(msg=="สวัสดี"){
 
-        addMessage("JARVIS",new Date().toLocaleDateString());
-
-        return;
+        reply="สวัสดีครับ";
 
     }
 
-    if(msg=="สวัสดี"){
+    else{
 
-        addMessage("JARVIS","สวัสดีครับ");
-
-        return;
+        reply="ผมยังไม่เข้าใจคำสั่งนี้";
 
     }
 
-    addMessage("JARVIS","ขออภัย ผมยังไม่เข้าใจ");
+    addMessage("JARVIS",reply);
+
+    speak(reply);
+
 }
 
 function addMessage(sender,message){
@@ -114,5 +100,49 @@ function addMessage(sender,message){
     chat.innerHTML += "<p><b>"+sender+" :</b> "+message+"</p>";
 
     chat.scrollTop=chat.scrollHeight;
+
+}
+
+function speak(text){
+
+    let speech=new SpeechSynthesisUtterance(text);
+
+    speech.lang="th-TH";
+
+    speech.rate=1;
+
+    speech.pitch=1;
+
+    speechSynthesis.speak(speech);
+
+}
+
+function startListening(){
+
+    const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+    if(!SpeechRecognition){
+
+        alert("เบราว์เซอร์นี้ไม่รองรับการฟังเสียง");
+
+        return;
+
+    }
+
+    recognition=new SpeechRecognition();
+
+    recognition.lang="th-TH";
+
+    recognition.start();
+
+    recognition.onresult=function(event){
+
+        let text=event.results[0][0].transcript;
+
+        document.getElementById("userInput").value=text;
+
+        sendMessage();
+
+    }
 
 }
