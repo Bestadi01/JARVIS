@@ -1,27 +1,20 @@
 // ==========================
-// JARVIS v2.0
+// JARVIS v3.0
 // Command System
 // ==========================
 
 const commands = {
 
-   "google": function () {
-    window.open("https://www.google.com");
-    },
-    "YouTube": function () {
-    window.open("https://www.youtube.com");
-    },
-    
-    "วันที่": function () {
-        addMessage("JARVIS", new Date().toLocaleDateString());
-    },
-  
     "สวัสดี": function () {
         addMessage("JARVIS", "สวัสดีครับ");
     },
 
     "เวลา": function () {
         addMessage("JARVIS", new Date().toLocaleTimeString());
+    },
+
+    "วันที่": function () {
+        addMessage("JARVIS", new Date().toLocaleDateString());
     },
 
     "ชื่อฉันคืออะไร": function () {
@@ -45,6 +38,30 @@ const commands = {
         localStorage.removeItem("jarvis_name");
 
         addMessage("JARVIS", "ลบข้อมูลเรียบร้อย");
+
+    },
+
+    "เปิด google": function () {
+
+        window.open("https://www.google.com", "_blank");
+
+        addMessage("JARVIS", "กำลังเปิด Google");
+
+    },
+
+    "เปิด youtube": function () {
+
+        window.open("https://www.youtube.com", "_blank");
+
+        addMessage("JARVIS", "กำลังเปิด YouTube");
+
+    },
+
+    "เปิด github": function () {
+
+        window.open("https://github.com", "_blank");
+
+        addMessage("JARVIS", "กำลังเปิด GitHub");
 
     }
 
@@ -93,6 +110,22 @@ function process(text) {
         localStorage.setItem("jarvis_name", name);
 
         addMessage("JARVIS", "ยินดีที่ได้รู้จัก " + name);
+
+        return;
+
+    }
+
+    if (text.startsWith("ค้นหา ")) {
+
+        let keyword = text.substring(6);
+
+        window.open(
+            "https://www.google.com/search?q=" +
+            encodeURIComponent(keyword),
+            "_blank"
+        );
+
+        addMessage("JARVIS", "กำลังค้นหา " + keyword);
 
         return;
 
