@@ -1,26 +1,35 @@
 JARVIS/
 │
 ├── index.html
+├── README.md
+│
 ├── css/
 │   ├── main.css
-│   ├── chat.css
-│   └── theme.css
+│   ├── dashboard.css
+│   └── chat.css
 │
 ├── js/
 │   ├── app.js
 │   ├── ui.js
 │   ├── router.js
-│   ├── api.js
 │   ├── storage.js
+│   ├── api.js
 │   └── config.js
 │
 ├── modules/
 │   ├── ai/
 │   ├── voice/
-│   ├── plugins/
 │   ├── memory/
+│   ├── plugins/
 │   └── system/
 │
 ├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── sounds/
 │
-└── README.md
+└── pages/
+    ├── dashboard.html
+    ├── chat.html
+    ├── settings.html
+    └── plugins.html
