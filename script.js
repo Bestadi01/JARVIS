@@ -40,56 +40,47 @@ function sendMessage(){
 }
 
 function process(text){
+async function process(text){
 
-    let msg=text.toLowerCase();
+    addMessage("JARVIS","กำลังคิด...");
 
-    let reply="";
+    try{
 
-    if(msg.startsWith("ฉันชื่อ ")){
+        let response = await fetch(CONFIG.API_URL,{
 
-        let name=text.substring(8);
+            method:"POST",
 
-        localStorage.setItem("username",name);
+            headers:{
 
-        reply="ยินดีที่ได้รู้จัก "+name;
+                "Content-Type":"application/json",
 
-    }
+                "Authorization":"Bearer "+CONFIG.API_KEY
 
-    else if(msg=="ชื่อฉันคืออะไร"){
+            },
 
-        let name=localStorage.getItem("username");
+            body:JSON.stringify({
 
-        reply=name ? "คุณชื่อ "+name : "คุณยังไม่ได้บอกชื่อ";
+                message:text
 
-    }
+            })
 
-    else if(msg=="เวลา"){
+        });
 
-        reply=new Date().toLocaleTimeString();
+        let data=await response.json();
 
-    }
+        let reply=data.reply;
 
-    else if(msg=="วันที่"){
+        addMessage("JARVIS",reply);
 
-        reply=new Date().toLocaleDateString();
-
-    }
-
-    else if(msg=="สวัสดี"){
-
-        reply="สวัสดีครับ";
+        speak(reply);
 
     }
 
-    else{
+    catch(error){
 
-        reply="ผมยังไม่เข้าใจคำสั่งนี้";
+        addMessage("JARVIS","ไม่สามารถเชื่อมต่อ AI ได้");
 
     }
-
-    addMessage("JARVIS",reply);
-
-    speak(reply);
 
 }
 
