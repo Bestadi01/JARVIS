@@ -1,19 +1,11 @@
 JARVIS
 │
-├── css
-│   └── style.css
+├── index.html
+├── style.css
 │
-├── js
-│   ├── app.js
-│   ├── ai.js
-│   ├── voice.js
-│   └── memory.js
-│
-├── img
-├── sounds
-├── data
-├── pages
-├── api
-├── plugins
-├── system
-└── index.html
+├── app.js
+├── ai.js
+├── commands.js
+├── memory.js
+├── voice.js
+└── script.js
