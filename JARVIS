@@ -1,7 +1,14 @@
 JARVIS
 │
 ├── css
+│   └── style.css
+│
 ├── js
+│   ├── app.js
+│   ├── ai.js
+│   ├── voice.js
+│   └── memory.js
+│
 ├── img
 ├── sounds
 ├── data
