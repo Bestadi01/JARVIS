@@ -1,2 +1,7 @@
 # JARVIS
-JARVIS/ ├── index.html ├── style.css ├── script.js ├── README.md └── LICENSE
+JARVIS/ 
+├── index.html 
+├── style.css 
+├── script.js 
+├── README.md 
+└── LICENSE
